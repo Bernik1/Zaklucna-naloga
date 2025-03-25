@@ -1,0 +1,21 @@
+Opis projekta: FitBuddy - Aplikacija za vadbene partnerje
+Namen projekta: FitBuddy je spletna aplikacija, ki pomaga uporabnikom najti partnerje za vadbo glede na njihove cilje in interese. Omogoča tudi spremljanje napredka in dosego vadbenih ciljev.
+
+Glavne funkcionalnosti:
+Registracija in prijava uporabnikov
+Iskanje vadbenih partnerjev
+Nastavitev in spremljanje vadbenih ciljev
+Povezovanje z drugimi uporabniki
+
+Struktura projekta:
+app/: Koda aplikacije (routes, modeli, obrazci)
+
+templates/: HTML predloge
+
+static/: Statične datoteke (CSS, slike)
+
+config.py: Nastavitve aplikacije
+
+zagon.py: Zagon aplikacije
+
+Povzetek: FitBuddy je enostavna in uporabniku prijazna aplikacija, ki povezuje ljudi za skupne vadbe in spremlja njihov napredek. Aplikacija je zasnovana s Flaskom in omogoča hitro širitev z novimi funkcionalnostmi.
