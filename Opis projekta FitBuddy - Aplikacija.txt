@@ -19,3 +19,111 @@ config.py: Nastavitve aplikacije
 zagon.py: Zagon aplikacije
 
 Povzetek: FitBuddy je enostavna in uporabniku prijazna aplikacija, ki povezuje ljudi za skupne vadbe in spremlja njihov napredek. Aplikacija je zasnovana s Flaskom in omogoča hitro širitev z novimi funkcionalnostmi.
+
+
+
+
+
+
+analiza projekta
+1. Uvod
+FitBuddy je aplikacija, ki pomaga uporabnikom najti partnerje za vadbo in spremljati njihov napredek pri doseganju vadbenih ciljev. 
+V zadnjih letih so se aplikacije za zdravje in fitnes močno razvile, saj vedno več ljudi išče načine za izboljšanje svoje telesne pripravljenosti.
+V tem kontekstu ima FitBuddy velik potencial, da se poveže z uporabniki, ki želijo več motivacije za vadbo in iščejo nekoga, s katerim bodo vadili.
+
+2. Tržni segmenti
+FitBuddy lahko nagovori različne vrste uporabnikov, ki iščejo partnerje za vadbo ali pomoč pri dosego svojih ciljev.
+Tu so glavni ciljni uporabniki:
+a) Fitnes navdušenci
+To so ljudje, ki redno telovadijo in iščejo dodatno motivacijo ali želijo vaditi v paru. Aplikacija bi jim omogočila, da najdejo partnerje s podobnimi cilji in interesi.
+
+b) Začetniki
+Ljudje, ki šele začenjajo z vadbo, bi lahko uporabili FitBuddy, da najdejo nekoga, ki jih bo spodbujal in jim pomagal pri začetkih.
+To bi bilo še posebej koristno za tiste, ki se bojijo, da bi začeli sami.
+
+c) Skupine in društva
+Skupine, društva ali telovadnice lahko uporabijo aplikacijo, da najdejo partnerje za različne vrste vadb, kot so joga, tek, plavanje, ali kolesarjenje. 
+To bi bila priložnost za širitev uporabniške baze.
+
+d) Tehnološki uporabniki
+Z rastjo pametnih naprav, kot so pametne ure, uporabniki, ki že spremljajo svoje telesne dejavnosti s tehnologijo, iščejo aplikacije, ki se povežejo s temi napravami. 
+FitBuddy lahko omogoči integracijo s temi napravami za boljše sledenje napredku.
+
+3. Trendi na trgu
+Tako kot mnoge druge industrije, tudi industrija zdravja in telesne pripravljenosti sledi nekaterim ključnim trendom:
+
+a) Rast uporabe pametnih naprav
+Pametne naprave, kot so Fitbit, Apple Watch in druge, postajajo vse bolj priljubljene, saj ljudje želijo bolj natančno spremljati svoje telesne aktivnosti. 
+FitBuddy se lahko poveže s temi napravami in ponudi dodatno vrednost uporabnikom.
+
+b) Vadba doma
+Po pandemiji COVID-19 so se ljudje začeli bolj zanimati za vadbo doma, saj ni bilo mogoče obiskovati telovadnic. 
+FitBuddy bi lahko omogočil iskanje partnerjev za domače vadbe ali celo ponujal virtualne vadbe na daljavo.
+
+c) Socialna komponenta
+V zadnjem času so ljudje bolj odprti za skupnosti, kjer se povezujejo z drugimi.
+Aplikacije za fitnes, ki omogočajo povezovanje z drugimi uporabniki in spodbujajo sodelovanje, so postale priljubljene. 
+FitBuddy lahko vključuje funkcije, ki omogočajo, da uporabniki najdejo prijatelje, ki imajo podobne cilje in interese.
+
+d) Personalizacija
+Uporabniki želijo aplikacije, ki so prilagojene njihovim potrebam. FitBuddy bi lahko ponujal personalizirane cilje in vadbe glede na individualne želje uporabnikov, 
+kar bi povečalo njihovo zadovoljstvo z uporabo aplikacije.
+
+4. Konkurenca
+Na trgu že obstajajo podobne aplikacije, ki ponujajo različne funkcionalnosti za fitnes. Tu so nekateri glavni konkurenti:
+a) Strava
+Strava je priljubljena aplikacija za športnike, ki omogoča sledenje aktivnostim, vendar ne ponuja funkcionalnosti za iskanje partnerjev za vadbo. 
+FitBuddy bi se lahko ločil od Strave prav zaradi te posebnosti.
+
+b) GymBuddy
+GymBuddy omogoča iskanje vadbenih partnerjev, vendar je aplikacija precej enostavna in ni tako razvijena kot FitBuddy, ki lahko ponudi širšo paleto funkcionalnosti.
+
+c) MyFitnessPal
+MyFitnessPal je zelo priljubljena aplikacija za spremljanje prehrane in telesne aktivnosti, vendar ne omogoča iskanja partnerjev za vadbo.
+FitBuddy se lahko osredotoči na to specifično funkcijo.
+
+d) Nike Training Club
+Nike ponuja aplikacijo za treninge, vendar se osredotoča predvsem na vadbene programe, brez poudarka na iskanju partnerjev za vadbo.
+
+5. Potencial za rast
+Trg za fitnes aplikacije še naprej raste, saj vedno več ljudi prepoznava pomen telesne aktivnosti za zdravje. 
+FitBuddy ima velik potencial za rast zaradi več razlogov:
+
+Geografska širitev: FitBuddy lahko začne na enem trgu (v Sloveniji) in nato razširi svoje storitve v druge države.
+Nove funkcionalnosti: Aplikacija lahko vključuje dodatne možnosti, kot so video klici z vadbenimi partnerji, napredne statistike napredka ali posebni izzivi.
+Partnerstva in promocije: FitBuddy se lahko poveže z blagovnimi znamkami, ki prodajajo fitnes opremo ali prehrano, kar bi omogočilo dodatno monetizacijo aplikacije.
+
+6. Osnovni paket (Brezplačen)
+
+Funkcije:
+Iskanje vadbenih partnerjev
+Nastavitev in spremljanje osnovnih vadbenih ciljev
+Dostop do brezplačnih vadbenih vsebin
+Ogledi oglasov
+
+7. Premium paket
+Cena: Mesečna naročnina (5 € na mesec)
+
+Funkcije:
+Vse funkcionalnosti iz osnovnega paketa
+Povečana vidnost na seznamu vadbenih partnerjev
+Napreden profil za iskanje partnerjev (filtriranje po ciljih, interesih itd.)
+Brez oglasov
+Dostop do personaliziranih vadbenih načrtov
+Napredna statistika in spremljanje napredka
+
+8. Pro paket
+Cena: Mesečna naročnina (10 € na mesec)
+
+Funkcije:
+Vse funkcionalnosti iz Premium paketa
+Virtualni osebni trener (dostop do personaliziranih treningov in nasvetov)
+Dodatne ekskluzivne vadbe (video vadbe ali posebni izzivi)
+Napredno integracijo z nosljivimi napravami (Apple Watch, Fitbit itd.)
+Dnevne motivacijske nasvete in podpora
+Možnost dostopa do zasebnih treningov (online seje z trenerjem)
+
+9. Zaključek
+FitBuddy ima veliko priložnosti za uspeh na trgu, ki se hitro razvija. S svojo osredotočenostjo na iskanje vadbenih partnerjev, spremljanje napredka in dosego ciljev
+lahko aplikacija zadosti potrebam širokega spektra uporabnikov. 
+S pravo tržno strategijo in izboljšavami funkcionalnosti bi FitBuddy lahko postal zelo priljubljena aplikacija na področju telesne pripravljenosti in zdravja.
