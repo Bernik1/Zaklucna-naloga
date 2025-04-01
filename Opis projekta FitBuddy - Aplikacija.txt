@@ -1,25 +1,6 @@
 Opis projekta: FitBuddy - Aplikacija za vadbene partnerje
-Namen projekta: FitBuddy je spletna aplikacija, ki pomaga uporabnikom najti partnerje za vadbo glede na njihove cilje in interese.
-
-Glavne funkcionalnosti:
-Registracija in prijava uporabnikov
-Iskanje vadbenih partnerjev
-Nastavitev in spremljanje vadbenih ciljev
-Povezovanje z drugimi uporabniki
-
-Struktura projekta:
-app/: Koda aplikacije (routes, modeli, obrazci)
-
-templates/: HTML predloge
-
-static/: Statične datoteke (CSS, slike)
-
-config.py: Nastavitve aplikacije
-
-zagon.py: Zagon aplikacije
-
-Povzetek: FitBuddy je enostavna in uporabniku prijazna aplikacija, ki povezuje ljudi za skupne vadbe in spremlja njihov napredek. 
-Aplikacija je zasnovana s Flaskom in omogoča hitro širitev z novimi funkcionalnostmi.
+Namen projekta je ce potrebujes partnerja s katerim bi telovadil, imel skupne cilje
+možnost dosežti te cilje.
 
 
 
@@ -35,26 +16,20 @@ Začetniki – potrebujejo spodbudo in pomoč pri prvih korakih.
 Skupine in društva – organizacije, ki želijo povezati člane za skupinske aktivnosti.
 Tehnološki uporabniki – uporabljajo pametne naprave za spremljanje vadbe.
 
-3. Tržni trendi
-Pametne naprave – vse več ljudi spremlja telesno aktivnost s tehnologijo.
-Vadba doma – povpraševanje po domačih treningih je v porastu.
-Socialna komponenta – uporabniki želijo aplikacije, ki jih povezujejo z drugimi.
-Personalizacija – prilagodljeni načrti povečujejo motivacijo in zvestobo uporabnikov.
-
-4. Konkurenca
+3. Konkurenca
 Strava – spremlja vadbe, a ne omogoča iskanja partnerjev.
 GymBuddy – ponuja podobno storitev, a z manj funkcijami.
 MyFitnessPal – osredotočen na prehrano in sledenje kalorijam.
 
-5. Potencial za rast
+4. Potencial za rast
 Geografska širitev – začetek v Sloveniji, kasneje širitev na druge trge.
 Sodelovanja – povezovanje z blagovnimi znamkami fitnes opreme in prehrane.
 
-6. Monetizacija
+5. paketi
 Osnovni paket (brezplačen) – iskanje partnerjev, osnovno sledenje ciljem, prikaz oglasov.
 Premium paket (5 €/mesec) – brez oglasov, napredno iskanje partnerjev, personalizirani vadbeni načrti.
 Pro paket (10 €/mesec) – virtualni trener, ekskluzivne vadbe, integracija s pametnimi napravami.
 
-7. Zaključek
+6. Zaključek
 FitBuddy izkorišča rastoče trende v industriji fitnes aplikacij in ponuja edinstveno vrednost s povezovanjem uporabnikov.
 S pravo tržno strategijo in nadgradnjami lahko postane priljubljena platforma za fitnes skupnost.
