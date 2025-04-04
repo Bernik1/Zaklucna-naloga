@@ -25,11 +25,16 @@ MyFitnessPal – osredotočen na prehrano in sledenje kalorijam.
 Geografska širitev – začetek v Sloveniji, kasneje širitev na druge trge.
 Sodelovanja – povezovanje z blagovnimi znamkami fitnes opreme in prehrane.
 
-5. paketi
+5. Ciljni uporabniki
+Največ od leta 15-30, lahko tudi ostali ampak kot rekreacija in ostalo.
+Saj so ljudje v teh letih največ aktivnih in večino želijo doseči nek cilj.
+
+
+6. paketi
 Osnovni paket (brezplačen) – iskanje partnerjev, osnovno sledenje ciljem, prikaz oglasov.
 Premium paket (5 €/mesec) – brez oglasov, napredno iskanje partnerjev, personalizirani vadbeni načrti.
 Pro paket (10 €/mesec) – virtualni trener, ekskluzivne vadbe, integracija s pametnimi napravami.
 
-6. Zaključek
+7. Zaključek
 FitBuddy izkorišča rastoče trende v industriji fitnes aplikacij in ponuja edinstveno vrednost s povezovanjem uporabnikov.
 S pravo tržno strategijo in nadgradnjami lahko postane priljubljena platforma za fitnes skupnost.
