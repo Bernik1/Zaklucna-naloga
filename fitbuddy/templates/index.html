@@ -13,7 +13,7 @@
 
     body {
       height: 100vh;
-      background: url('love.jpg') no-repeat center center;
+      background: url('{{ url_for("static", filename="love.jpg") }}') no-repeat center center;
       background-size: cover;
       font-family: Arial, sans-serif;
       position: relative;
@@ -79,8 +79,8 @@
   <div class="spinner" id="spinner"></div>
 
   <div class="buttons">
-    <button onclick="redirectTo('login.html')">Log in</button>
-    <button onclick="redirectTo('signup.html')">Sign up</button>
+    <button onclick="redirectTo('/login')">Log in</button>
+    <button onclick="redirectTo('/signup')">Sign up</button>
   </div>
 
   <div class="container">
@@ -88,7 +88,7 @@
   </div>
 
   <script>
-    function redirectTo(page) { // tukaj sem dodal se vrtljiv krogec, ko izberem neko spletno stran sem mi nalaga 1 sekundo in vrti krogec zgoraj na sredini 
+    function redirectTo(page) {
       const spinner = document.getElementById('spinner');
       spinner.style.display = 'block';
 

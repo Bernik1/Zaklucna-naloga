@@ -7,7 +7,7 @@
     body {
       margin: 0;
       padding: 0;
-      background: url('signup.jpg') no-repeat center center fixed;
+      background: url('{{ url_for("static", filename="signup.jpg") }}') no-repeat center center fixed;
       background-size: cover;
       font-family: Arial, sans-serif;
     }
@@ -110,12 +110,15 @@
     </form>
     <div class="switch">
       Already have an account?
-      <a onclick="redirectTo('login.html')">Log in</a>
+      <a onclick="redirectTo('/login')">Log in</a>
     </div>
+    <div class="switch">
+      <a onclick="redirectTo('/')">← Nazaj na začetek</a>
+    </div>  
   </div>
 
   <script>
-    function redirectTo(page) { // enako kot v zacetni strani dodan krogec, ko pri sugnup izberem login se naredi 
+    function redirectTo(page) {
       const spinner = document.getElementById('spinner');
       spinner.style.display = 'block';
 
