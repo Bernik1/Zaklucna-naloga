@@ -13,7 +13,7 @@
 
     body {
       height: 100vh;
-      background: url('anja-bla.jpg') no-repeat center center;
+      background: url('anja-bla-18.jpg') no-repeat center center;
       background-size: cover;
       font-family: Arial, sans-serif;
       display: flex;
@@ -28,6 +28,7 @@
       width: 300px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
       text-align: center;
+      position: relative;
     }
 
     .login-box h2 {
@@ -65,10 +66,38 @@
       color: #0099cc;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-box .signup a:hover {
+      text-decoration: underline;
+    }
+
+    .spinner {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      animation: spin 1s linear infinite;
+      z-index: 100;
+    }
+
+    @keyframes spin {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
     }
   </style>
 </head>
 <body>
+
+  <div class="spinner" id="spinner"></div>
+
   <div class="login-box">
     <h2>Log in</h2>
     <form action="/login" method="POST">
@@ -77,9 +106,20 @@
       <button type="submit">Log in</button>
     </form>
     <div class="signup">
-      Don't have an account? <a href="signup.html">Sign up</a>
+      Don't have an account? <a onclick="redirectTo('signup.html')">Sign up</a>
     </div>
   </div>
-</body>
 
+  <script>
+    function redirectTo(page) { // naredil krogec ko izberem signup da se pojavi 
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = page;
+      }, 1000);
+    }
+  </script>
+
+</body>
 </html>
