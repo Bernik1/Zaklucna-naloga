@@ -1,74 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sign Up - FIT Buddy</title>
+  <meta charset="UTF-8">
+  <title>Fit Buddy - Sign Up</title>
   <style>
     body {
-      height: 100vh;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('signup.jpg') no-repeat center center;
+      padding: 0;
+      background: url('signup.jpg') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-family: Arial, sans-serif;
     }
 
     .signup-box {
-      background-color: rgba(90, 80, 80, 0.9);
-      padding: 40px;
+      background-color: white;
       border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      padding: 30px 40px;
       width: 300px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      margin: 100px auto;
       text-align: center;
+      position: relative;
     }
 
-    h1 {
-      color: white;
+    .signup-box h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .signup-box h2 {
+      font-size: 22px;
       margin-bottom: 20px;
     }
 
-    h2 {
-      margin-bottom: 15px;
-      color: white;
-    }
-
-    input {
+    .signup-box input {
       width: 100%;
       padding: 10px;
-      margin: 8px 0;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 14px;
     }
 
-    button {
+    .signup-box button {
       width: 100%;
       padding: 10px;
-      background-color: #444;
+      background-color: #00a0d1;
       color: white;
       border: none;
       border-radius: 5px;
-      font-weight: bold;
-      margin-top: 10px;
+      font-size: 16px;
       cursor: pointer;
+    }
+
+    .signup-box button:hover {
+      background-color: #008bb5;
     }
 
     .switch {
       margin-top: 15px;
       font-size: 14px;
-      color: #eee;
+      color: #555;
     }
 
     .switch a {
-      color: #ffffff;
+      color: #00a0d1;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .switch a:hover {
       text-decoration: underline;
+    }
+
+    /* Spinner centered top */
+    .spinner {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      z-index: 100;
+    }
+
+    @keyframes spin {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
     }
   </style>
 </head>
 <body>
 
+  <!-- Spinner -->
+  <div class="spinner" id="spinner"></div>
+
+  <!-- Sign up box -->
   <div class="signup-box">
     <h1>Fit Buddy</h1>
     <h2>Sign up</h2>
@@ -78,9 +112,21 @@
       <button type="submit">Sign in</button>
     </form>
     <div class="switch">
-      Already have an account? <a href="login.html">Log in</a>
+      Already have an account?
+      <a onclick="redirectTo('login.html')">Log in</a>
     </div>
   </div>
+
+  <script>
+    function redirectTo(page) { // enako kot v zacetni strani dodan krogec, ko pri sugnup izberem login se naredi 
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = page;
+      }, 1000);
+    }
+  </script>
 
 </body>
 </html>
