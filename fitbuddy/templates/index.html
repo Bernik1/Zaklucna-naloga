@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FIT Buddy - Welcome</title>
+  <title>Fit Buddy</title>
   <style>
     * {
       margin: 0;
@@ -16,46 +16,88 @@
       background: url('love.jpg') no-repeat center center;
       background-size: cover;
       font-family: Arial, sans-serif;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+      position: relative;
     }
 
-    h1 {
+    .container {
+      position: absolute;
+      top: 30%;
+      left: 10%;
+      color: #aaa;
+    }
+
+    .container h1 {
       font-size: 48px;
-      margin-bottom: 30px;
+      font-weight: bold;
     }
 
     .buttons {
-      display: flex;
-      gap: 20px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
 
-    .buttons a {
-      padding: 12px 24px;
-      background-color: rgba(255, 255, 255, 0.85);
-      color: #222;
+    .buttons button {
+      background-color: lightgray;
+      border: none;
+      padding: 10px 20px;
+      margin-left: 10px;
+      border-radius: 5px;
+      font-size: 16px;
       font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
 
-    .buttons a:hover {
-      background-color: #ddd;
+    .buttons button:hover {
+      background-color: #ccc;
+    }
+
+    /* Spinner centered top */
+    .spinner {
+      display: none;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid rgba(255, 255, 255, 0.3);
+      border-top: 6px solid #ffffff;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      animation: spin 1s linear infinite;
+      z-index: 100;
+    }
+
+    @keyframes spin {
+      0% { transform: translateX(-50%) rotate(0deg); }
+      100% { transform: translateX(-50%) rotate(360deg); }
     }
   </style>
 </head>
 <body>
 
-  <h1>FIT Buddy</h1>
+  <div class="spinner" id="spinner"></div>
+
   <div class="buttons">
-    <a href="login.html">Log in</a>
-    <a href="signup.html">Sign up</a>
+    <button onclick="redirectTo('login.html')">Log in</button>
+    <button onclick="redirectTo('signup.html')">Sign up</button>
   </div>
+
+  <div class="container">
+    <h1>FIT Buddy</h1>
+  </div>
+
+  <script>
+    function redirectTo(page) { // tukaj sem dodal se vrtljiv krogec, ko izberem neko spletno stran sem mi nalaga 1 sekundo in vrti krogec zgoraj na sredini 
+      const spinner = document.getElementById('spinner');
+      spinner.style.display = 'block';
+
+      setTimeout(() => {
+        window.location.href = page;
+      }, 1000);
+    }
+  </script>
 
 </body>
 </html>
