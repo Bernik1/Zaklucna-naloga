@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard – FitBuddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 300px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+        }
+        .topbar {
+            text-align: right;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="{{ url_for('settings') }}">⚙️ Nastavitve</a>
+    </div>
+
+    <h1>Dobrodošel, {{ username }}!</h1>
+
+    <div class="card">
+        <h2>Uporabnik A</h2>
+        <p>Starost: 23</p>
+        <p>Cilj: Pridobivanje mišične mase</p>
+    </div>
+
+    <button onclick="swipe('levo')">⟵ Ne</button>
+    <button onclick="swipe('desno')">Da ⟶</button>
+
+    <script>
+        function swipe(smer) {
+            alert("Swipal si " + smer + " (simulacija)");
+        }
+    </script>
+</body>
+</html>
