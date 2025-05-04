@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Nastavitve – FitBuddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nastavitve profila</h1>
+
+    <form method="POST">
+        <label for="age">Starost:</label>
+        <input type="number" name="age" id="age" value="{{ profile.age if profile else '' }}" required>
+
+        <label for="goal">Cilj (npr. hujšanje, moč, vzdržljivost):</label>
+        <input type="text" name="goal" id="goal" value="{{ profile.goal if profile else '' }}" required>
+
+        <label for="bio">Kratek opis o sebi:</label>
+        <textarea name="bio" id="bio" rows="4">{{ profile.bio if profile else '' }}</textarea>
+
+        <button type="submit">Shrani nastavitve</button>
+    </form>
+
+    <a href="{{ url_for('dashboard') }}">← Nazaj na dashboard</a>
+</body>
+</html>
