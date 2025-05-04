@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <title>Swipe – FitBuddy</title>
+</head>
+<body>
+    <h1>Swipe</h1>
+    
+    {% for user in users %}
+        <div>
+            <h3>{{ user.username }}</h3>
+            <form method="POST">
+                <button type="submit" name="swipe_action" value="left">Swipe Left</button>
+                <button type="submit" name="swipe_action" value="right">Swipe Right</button>
+                <input type="hidden" name="target_user" value="{{ user.username }}">
+            </form>
+        </div>
+    {% endfor %}
+    
+</body>
+</html>
