@@ -2,49 +2,127 @@
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard – FitBuddy</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
             text-align: center;
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 30px;
         }
+
         .card {
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            width: 300px;
-            margin: 30px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .card-item {
+            background-color: #f9f9f9;
             padding: 20px;
+            border-radius: 8px;
+            width: 48%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        button {
-            margin: 10px;
-            padding: 10px 20px;
+
+        .card-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
-        .topbar {
-            text-align: right;
+
+        .card-item p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .back-link {
+            display: inline-block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .profile-image {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .button-link {
+            margin-top: 10px;
+            display: inline-block;
             padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .button-link:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="topbar">
-        <a href="{{ url_for('settings') }}">⚙️ Nastavitve</a>
+
+    <div class="container">
+        <h1>Dobrodošli, {{ profile.username }}!</h1>
+
+        <div class="card">
+            <div class="card-item">
+                <h3>Vaš profil</h3>
+                <p><strong>Starost:</strong> {{ profile.age }}</p>
+                <p><strong>Cilj:</strong> {{ profile.goal }}</p>
+                <p><strong>Opis:</strong> {{ profile.bio }}</p>
+                <a href="{{ url_for('settings') }}" class="button-link">Uredi profil</a>
+            </div>
+
+            <div class="card-item">
+                <h3>Profilna slika</h3>
+                {% if profile.picture %}
+                    <img src="{{ url_for('static', filename='uploads/' + profile.picture) }}" alt="Profilna slika" class="profile-image">
+                {% else %}
+                    <p>Profilna slika še ni nastavljena.</p>
+                {% endif %}
+            </div>
+            
+        </div>
+
+        <div class="back-link">
+            <a href="{{ url_for('logout') }}">Odjava</a>
+        </div>
     </div>
 
-    <h1>Dobrodošel, {{ username }}!</h1>
-
-    <div class="card">
-        <h2>Uporabnik A</h2>
-        <p>Starost: 23</p>
-        <p>Cilj: Pridobivanje mišične mase</p>
-    </div>
-
-    <button onclick="swipe('levo')">⟵ Ne</button>
-    <button onclick="swipe('desno')">Da ⟶</button>
-
-    <script>
-        function swipe(smer) {
-            alert("Swipal si " + smer + " (simulacija)");
-        }
-    </script>
 </body>
 </html>

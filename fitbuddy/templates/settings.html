@@ -2,49 +2,121 @@
 <html lang="sl">
 <head>
     <meta charset="UTF-8">
-    <title>Nastavitve – FitBuddy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nastavitve profila – FitBuddy</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: auto;
-            padding: 30px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
         }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
         label {
             display: block;
-            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
         }
-        input, textarea {
+
+        input, textarea, button {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
         }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
-        a {
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .back-link {
             display: inline-block;
-            margin-top: 15px;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1rem;
+        }
+
+        .back-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+
+<div class="container">
     <h1>Nastavitve profila</h1>
 
-    <form method="POST">
-        <label for="age">Starost:</label>
-        <input type="number" name="age" id="age" value="{{ profile.age if profile else '' }}" required>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="age">Starost:</label>
+            <input type="number" name="age" id="age" value="{{ profile.age if profile else '' }}" required>
+        </div>
 
-        <label for="goal">Cilj (npr. hujšanje, moč, vzdržljivost):</label>
-        <input type="text" name="goal" id="goal" value="{{ profile.goal if profile else '' }}" required>
+        <div class="form-group">
+            <label for="goal">Cilj (npr. hujšanje, moč, vzdržljivost):</label>
+            <input type="text" name="goal" id="goal" value="{{ profile.goal if profile else '' }}" required>
+        </div>
 
-        <label for="bio">Kratek opis o sebi:</label>
-        <textarea name="bio" id="bio" rows="4">{{ profile.bio if profile else '' }}</textarea>
+        <div class="form-group">
+            <label for="bio">Kratek opis o sebi:</label>
+            <textarea name="bio" id="bio">{{ profile.bio if profile else '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="profile_picture">Naloži novo profilno sliko:</label>
+            <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
+        </div>
 
         <button type="submit">Shrani nastavitve</button>
     </form>
 
-    <a href="{{ url_for('dashboard') }}">← Nazaj na dashboard</a>
+    <div class="back-link">
+        <a href="{{ url_for('dashboard') }}">← Nazaj na dashboard</a>
+    </div>
+</div>
+
 </body>
 </html>
