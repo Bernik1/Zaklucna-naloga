@@ -1,0 +1,53 @@
+{
+    "users": {
+        "1": {
+            "username": "bernik1",
+            "password": "scrypt:32768:8:1$i1t4ZXPtUyRoybqB$ebcb004882edc42f2681d4e3b07dbba0f1a4b225ab99dc310bee908ac6e48f10bef8c471727e959b9c0dcffbd7c3173fde418ee91cb976b6185e5f2b9b473ea9",
+            "age": "16",
+            "goal": "delanje na moči",
+            "bio": "fsfsdfd",
+            "picture": "anja-bla-18.jpg",
+            "background_image": ""
+        },
+        "2": {
+            "username": "lolek123",
+            "password": "scrypt:32768:8:1$FBKFug9Szs61PEKF$d2b315b72026add7e34a3e255be0fd8573be85a2b4cbf6ad2b16cddd3e00b8738528572c6897b67542422528bbce31664010648aaa3f04ae8a88fe6dcd2cd315",
+            "profile": {
+                "age": "25",
+                "goal": "Povečanje mišične mase",
+                "bio": "Rad treniram v fitnesu, iščem nekoga za motivacijo.",
+                "picture": "user1.jpg"
+            }
+        },
+        "3": {
+            "username": "abcd123",
+            "password": "scrypt:32768:8:1$dHUBGDhjpxzP29CR$73b0d519f9ab65bb2c25f415d26c1dc9ac6f74f25fda0106362ff12376a9cdea9c9add0f8247216ba21fac4f4b464a7856eec255231d7435af9aef05c1b02c56",
+            "profile": {
+                "age": "22",
+                "goal": "Povečanje moči",
+                "bio": "Želim pridobiti več moči in izboljšati svojo vzdržljivost.",
+                "picture": "user2.jpg"
+            }
+        },
+        "4": {
+            "username": "janeznovak",
+            "password": "scrypt:32768:8:1$MienGTLK4uZJAXvB$ef65cb93d5392df588a7c89a31cf0b06327a6ce9e05eb66ff5dc5c2354bf2198f34a595fb9590c095e5d8ae8b94373abafa6d48a66ff938fbd50fa60ecdac0e6",
+            "profile": {
+                "age": "28",
+                "goal": "Hujšanje",
+                "bio": "Rad bi shujšal in se počutil bolje v svoji koži.",
+                "picture": "user3.jpg"
+            }
+        },
+        "5": {
+            "username": "marko5",
+            "password": "scrypt:32768:8:1$MVE5tnWAYkUQaUMG$e7756fbe6955409a2467dcba3e431485dd1c3dc833d3a88893e73cb9eb2f4dc949e73663e5b80cfa211d17202f800c0eb613be63ee0d583b58beaeaba6d71ac4",
+            "profile": {
+                "age": "30",
+                "goal": "Vzdrževanje telesne teže",
+                "bio": "Hočem ostati v formi in živeti zdrav način življenja.",
+                "picture": "useMona_Lisa_by_Leonardo_da_Vinci_from_C2RMF_retouchedr.jpg"
+            }
+        }
+    }
+}

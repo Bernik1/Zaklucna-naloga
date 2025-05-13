@@ -6,12 +6,18 @@ import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
+
+# Poti do upload map
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
+app.config['BACKGROUND_FOLDER'] = 'static/backgrounds'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
-db = TinyDB('db.json')
+# Inicializacija baze
+db = TinyDB('users.json')  
 users_table = db.table('users')
 
+
+# Funkcija za preverjanje dovoljene datoteke
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
@@ -28,9 +34,9 @@ def login():
         user = users_table.search(User.username == username)
         if user and check_password_hash(user[0]['password'], password):
             session['user_id'] = user[0]['username']
-            flash('Login successful!', 'success')
+            flash('Prijava uspešna!', 'success')
             return redirect(url_for('dashboard'))
-        flash('Invalid credentials.', 'danger')
+        flash('Napačno uporabniško ime ali geslo.', 'danger')
     return render_template('login.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -40,19 +46,26 @@ def signup():
         password = request.form['password']
         User = Query()
         if users_table.search(User.username == username):
-            flash('Username already taken.', 'danger')
+            flash('Uporabniško ime je že zasedeno.', 'danger')
         else:
             hashed_password = generate_password_hash(password)
-            users_table.insert({'username': username, 'password': hashed_password})
-            flash('Account created!', 'success')
+            users_table.insert({
+                'username': username,
+                'password': hashed_password,
+                'age': '',
+                'goal': '',
+                'bio': '',
+                'picture': '',
+                'background_image': ''
+            })
+            flash('Račun ustvarjen!', 'success')
             return redirect(url_for('login'))
     return render_template('signup.html')
 
-# Settings (UPLOAD LOGIC HERE)
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if 'user_id' not in session:
-        flash('Login required.', 'danger')
+        flash('Prijava je obvezna.', 'danger')
         return redirect(url_for('login'))
 
     user_id = session['user_id']
@@ -66,41 +79,65 @@ def settings():
 
         update_data = {'age': age, 'goal': goal, 'bio': bio}
 
+        # profilna
         if 'profile_picture' in request.files:
             file = request.files['profile_picture']
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)  # Ensure folder exists
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                upload_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(upload_path)
                 update_data['picture'] = filename
 
+        # ozadje
+        if 'background_image' in request.files:
+            file = request.files['background_image']
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                bg_path = os.path.join(app.config['BACKGROUND_FOLDER'], filename)
+                file.save(bg_path)
+                update_data['background_image'] = filename
+
         users_table.update(update_data, User.username == user_id)
-        flash('Profile updated.', 'success')
+        flash('Profil posodobljen.', 'success')
         return redirect(url_for('dashboard'))
 
     profile = user[0] if user else None
     return render_template('settings.html', profile=profile)
 
-# Dashboard
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     if 'user_id' not in session:
-        flash('Login required.', 'danger')
+        flash('Prijava je obvezna.', 'danger')
         return redirect(url_for('login'))
 
     user_id = session['user_id']
     User = Query()
     user = users_table.search(User.username == user_id)
     profile = user[0] if user else None
-    return render_template('dashboard.html', profile=profile)
+
+    # Pridobivanje drugih uporabnikov, ki niso trenutni uporabnik
+    users = [u for u in users_table.all() if u['username'] != user_id]
+
+    # Obdelava swipe odločitve uporabnika
+    if request.method == 'POST':
+        swipe = request.form.get('swipe')  # 'left' ali 'right'
+        user_to_swipe = request.form.get('user_to_swipe')
+
+        # Shrani odločitev (lahko kasneje dodaš še shranjevanje v bazo ali session)
+        if swipe and user_to_swipe:
+            flash(f'Odločitev: {swipe} za uporabnika {user_to_swipe}', 'info')
+
+        # Pomik naprej na naslednjega uporabnika (preprosto)
+        if len(users) > 1:
+            users.pop(0)
+
+    return render_template('dashboard.html', profile=profile, users=users)
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    flash('Logged out.', 'info')
+    flash('Odjava uspešna.', 'info')
     return redirect(url_for('home'))
 
-# Run app
 if __name__ == "__main__":
-    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
     app.run(debug=True)

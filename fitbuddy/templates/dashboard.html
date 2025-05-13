@@ -92,6 +92,27 @@
         .button-link:hover {
             background-color: #0056b3;
         }
+
+        /* Swipe buttons styling */
+        .swipe-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .swipe-buttons button {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .swipe-buttons button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -107,17 +128,42 @@
                 <p><strong>Opis:</strong> {{ profile.bio }}</p>
                 <a href="{{ url_for('settings') }}" class="button-link">Uredi profil</a>
             </div>
-
+            
             <div class="card-item">
                 <h3>Profilna slika</h3>
                 {% if profile.picture %}
-                    <img src="{{ url_for('static', filename='uploads/' + profile.picture) }}" alt="Profilna slika" class="profile-image">
+                    <img src="{{ url_for('static', filename='uploads/' ~ profile.picture) }}" alt="Profilna slika" class="profile-image">
                 {% else %}
                     <p>Profilna slika še ni nastavljena.</p>
                 {% endif %}
             </div>
-            
         </div>
+
+        <h2>Izberi uporabnika za swipe:</h2>
+
+        {% if users %}
+            <div>
+                <h3>{{ users[0]['username'] }}</h3>
+                <p>Starost: {{ users[0]['profile']['age'] }}</p>
+                <p>Cilj: {{ users[0]['profile']['goal'] }}</p>
+                <p>Bio: {{ users[0]['profile']['bio'] }}</p>
+                {% if users[0]['profile']['picture'] %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ users[0]['profile']['picture']) }}" alt="Profile Picture" class="profile-image">
+                {% else %}
+                    <p>Profilna slika še ni nastavljena.</p>
+                {% endif %}
+            </div>
+
+            <form method="POST">
+                <div class="swipe-buttons">
+                    <button type="submit" name="swipe" value="left">Zavrni</button>
+                    <button type="submit" name="swipe" value="right">Sprejmi</button>
+                </div>
+                <input type="hidden" name="user_to_swipe" value="{{ users[0]['username'] }}">
+            </form>
+        {% else %}
+            <p>Ni več uporabnikov za swipanje.</p>
+        {% endif %}
 
         <div class="back-link">
             <a href="{{ url_for('logout') }}">Odjava</a>
