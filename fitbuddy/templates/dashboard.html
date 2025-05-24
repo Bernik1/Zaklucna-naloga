@@ -1,174 +1,164 @@
 <!DOCTYPE html>
 <html lang="sl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard – FitBuddy</title>
+    <meta charset="UTF-8" />
+    <title>Dashboard - Swipe uporabnikov</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fa;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .card {
+            height: 100vh;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
+            background-color: #f0f2f5;
         }
-
-        .card-item {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            width: 48%;
+        /* Levi sidebar */
+        .sidebar {
+            width: 250px;
+            background: #4267B2;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 20px;
             box-sizing: border-box;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-
-        .card-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
+        .sidebar h2 {
+            margin: 0 0 20px 20px;
+            font-weight: normal;
+            font-size: 22px;
         }
-
-        .card-item p {
-            font-size: 1rem;
-            color: #555;
-        }
-
-        .back-link {
-            display: inline-block;
-            text-align: center;
-            margin-top: 30px;
-            font-size: 1rem;
-        }
-
-        .back-link a {
-            color: #007bff;
+        .sidebar nav a {
+            color: white;
             text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
-
-        .back-link a:hover {
-            text-decoration: underline;
+        .sidebar nav a:hover,
+        .sidebar nav a.active {
+            background-color: #365899;
         }
-
-        .profile-image {
-            border-radius: 50%;
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-top: 10px;
-            border: 2px solid #ddd;
+        .chat-list {
+            list-style: none;
+            margin: 10px 0 0 0;
+            padding: 0;
+            overflow-y: auto;
+            flex-grow: 1;
+            background: #3b5998;
         }
-
-        .button-link {
-            margin-top: 10px;
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 5px;
+        .chat-list li {
+            border-bottom: 1px solid #365899;
+        }
+        .chat-list li a {
+            color: white;
+            padding: 12px 20px;
+            display: block;
             text-decoration: none;
+            font-size: 14px;
         }
-
-        .button-link:hover {
-            background-color: #0056b3;
+        .chat-list li a:hover,
+        .chat-list li a.active {
+            background-color: #2d4373;
         }
-
-        /* Swipe buttons styling */
-        .swipe-buttons {
+        /* Glavni container */
+        .main-container {
+            flex-grow: 1;
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            align-items: center;
+            background-color: #f0f2f5;
         }
-
-        .swipe-buttons button {
-            padding: 10px 20px;
-            background-color: #dc3545;
-            color: #fff;
-            border-radius: 5px;
-            border: none;
-            cursor: pointer;
+        /* Karte uporabnika za swipe */
+        .user-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            width: 350px;
+            text-align: center;
+        }
+        .user-card h2 {
+            margin: 0 0 15px;
+        }
+        .user-info {
+            margin-bottom: 20px;
+            font-size: 18px;
+            line-height: 1.4;
+            color: #333;
+        }
+        form button {
+            width: 130px;
+            padding: 10px;
             margin: 0 10px;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            color: white;
+            transition: background-color 0.3s ease;
         }
-
-        .swipe-buttons button:hover {
-            background-color: #c82333;
+        button.like {
+            background-color: #4CAF50;
+        }
+        button.like:hover {
+            background-color: #45a049;
+        }
+        button.dislike {
+            background-color: #f44336;
+        }
+        button.dislike:hover {
+            background-color: #da190b;
+        }
+        .no-users {
+            font-size: 20px;
+            color: #666;
+            padding: 40px;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Dobrodošli, {{ profile.username }}!</h1>
-
-        <div class="card">
-            <div class="card-item">
-                <h3>Vaš profil</h3>
-                <p><strong>Starost:</strong> {{ profile.age }}</p>
-                <p><strong>Cilj:</strong> {{ profile.goal }}</p>
-                <p><strong>Opis:</strong> {{ profile.bio }}</p>
-                <a href="{{ url_for('settings') }}" class="button-link">Uredi profil</a>
-            </div>
-            
-            <div class="card-item">
-                <h3>Profilna slika</h3>
-                {% if profile.picture %}
-                    <img src="{{ url_for('static', filename='uploads/' ~ profile.picture) }}" alt="Profilna slika" class="profile-image">
-                {% else %}
-                    <p>Profilna slika še ni nastavljena.</p>
-                {% endif %}
-            </div>
-        </div>
-
-        <h2>Izberi uporabnika za swipe:</h2>
-
-        {% if users %}
-            <div>
-                <h3>{{ users[0]['username'] }}</h3>
-                <p>Starost: {{ users[0]['profile']['age'] }}</p>
-                <p>Cilj: {{ users[0]['profile']['goal'] }}</p>
-                <p>Bio: {{ users[0]['profile']['bio'] }}</p>
-                {% if users[0]['profile']['picture'] %}
-                    <img src="{{ url_for('static', filename='uploads/' ~ users[0]['profile']['picture']) }}" alt="Profile Picture" class="profile-image">
-                {% else %}
-                    <p>Profilna slika še ni nastavljena.</p>
-                {% endif %}
-            </div>
-
-            <form method="POST">
-                <div class="swipe-buttons">
-                    <button type="submit" name="swipe" value="left">Zavrni</button>
-                    <button type="submit" name="swipe" value="right">Sprejmi</button>
-                </div>
-                <input type="hidden" name="user_to_swipe" value="{{ users[0]['username'] }}">
-            </form>
-        {% else %}
-            <p>Ni več uporabnikov za swipanje.</p>
-        {% endif %}
-
-        <div class="back-link">
+    <div class="sidebar">
+        <h2>Moj App</h2>
+        <nav>
+            <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Chat</a>
+            <a href="{{ url_for('messages') }}" class="{% if request.endpoint == 'messages' %}active{% endif %}">Sporočila</a>
+            <a href="{{ url_for('settings') }}" class="{% if request.endpoint == 'settings' %}active{% endif %}">Nastavitve</a>
             <a href="{{ url_for('logout') }}">Odjava</a>
-        </div>
+        </nav>
+
+        <ul class="chat-list">
+            {% if chats %}
+                {% for chat in chats %}
+                <li>
+                    <a href="{{ url_for('chat', username=chat.username) }}" class="{% if selected_user == chat.username %}active{% endif %}">
+                        {{ chat.username }}
+                    </a>
+                </li>
+                {% endfor %}
+            {% else %}
+            {% endif %}
+        </ul>
     </div>
 
+    <div class="main-container">
+        <div class="user-card">
+            {% if user %}
+                <h2>{{ user.username }}</h2>
+                <div class="user-info">
+                    <p><strong>Starost:</strong> {{ user.age or 'Ni podatka' }}</p>
+                    <p><strong>Cilj:</strong> {{ user.goal or 'Ni podatka' }}</p>
+                    <p><strong>O meni:</strong> {{ user.bio or 'Ni podatka' }}</p>
+                </div>
+                <form method="POST">
+                    <input type="hidden" name="user_to_swipe" value="{{ user.username }}">
+                    <button type="submit" name="swipe" value="like" class="like">Všeč mi je</button>
+                    <button type="submit" name="swipe" value="dislike" class="dislike">Ni mi všeč</button>
+                </form>
+            {% else %}
+                <p class="no-users">Trenutno ni več uporabnikov za swipe.</p>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
