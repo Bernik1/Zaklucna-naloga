@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="sl">
 <head>
     <meta charset="UTF-8" />
@@ -47,21 +47,10 @@
         }
         .main-container {
             flex-grow: 1;
-            padding: 40px;
+            padding: 20px 40px 40px 40px;
             background: white;
             display: flex;
             flex-direction: column;
-        }
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 15px;
-            background-color: #4267B2;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            width: fit-content;
         }
         .messages {
             flex-grow: 1;
@@ -71,12 +60,16 @@
             margin-bottom: 20px;
             background: #fafafa;
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         .message {
-            margin-bottom: 10px;
+            max-width: 60%;
             padding: 8px 12px;
             border-radius: 15px;
-            max-width: 60%;
+            word-wrap: break-word;
+            display: inline-block;
         }
         .message.sent {
             background-color: #4CAF50;
@@ -105,77 +98,142 @@
             border: none;
             border-radius: 6px;
         }
+
+        /* Stil za GIF iskanje */
+        #gifSearchContainer {
+            margin-bottom: 20px;
+        }
+        #gifResults {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            background: #fff;
+        }
+        #gifResults img {
+            cursor: pointer;
+            max-width: 100px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        #gifResults img:hover {
+            transform: scale(1.1);
+            border: 2px solid #4267B2;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background: #4267B2;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            width: max-content;
+        }
     </style>
 </head>
 <body>
-     </style>
-</head>
-<body>
     <div class="sidebar">
+        <a href="{{ url_for('dashboard') }}" class="back-btn">← Nazaj na Swipe</a>
+
+
         <h2>Sporočila</h2>
         <ul class="chat-list">
             {% for chat in chats %}
             <li>
-                <a href="{{ url_for('chat', username=chat.username) }}" class="{% if selected_user == chat.username %}active{% endif %}">{{ chat.username }}</a>
+                <a href="{{ url_for('chat', username=chat['username']) }}" class="{% if selected_user == chat['username'] %}active{% endif %}">
+                    {{ chat['username'] }}
+                </a>
             </li>
             {% endfor %}
         </ul>
     </div>
-
     <div class="main-container">
-        <a href="{{ url_for('dashboard') }}" style="margin-bottom: 20px; display:inline-block; background:#4267B2; color:white; padding:10px 15px; border-radius:6px; text-decoration:none;">← Nazaj na Swipe</a>
         <h3>Pogovor s {{ selected_user }}</h3>
-
-        <div id="messages" class="messages">
+        <div class="messages" id="messages">
             {% if messages %}
                 {% for msg in messages %}
-                    <div class="message {% if msg.from_user == current_user %}sent{% else %}received{% endif %}">
-                        {{ msg.text }}
-                    </div>
-                {% endfor %}
+                    <div class="message {% if msg['from_user'] == current_user %}sent{% else %}received{% endif %}">
+            {% if msg['text'] and msg['text'].startswith('http') and 'giphy.com' in msg['text'] %}
+                <img src="{{ msg['text'] }}" alt="GIF" style="max-width: 200px; border-radius: 10px;" />
+            {% else %}
+                {{ msg['text'] | e }}
+            {% endif %}
+        </div>
+    {% endfor %}
+
             {% else %}
                 <p>Ni sporočil.</p>
             {% endif %}
         </div>
 
-        <form id="messageForm">
+        <!-- GIF iskanje -->
+        <div id="gifSearchContainer">
+            <input type="text" id="gifSearchInput" placeholder="Išči GIF..." />
+            <button id="gifSearchBtn" type="button">Dodaj GIF</button>
+            <div id="gifResults"></div>
+        </div>
+
+        <form id="messageForm" method="POST">
             <textarea id="messageText" name="message_text" placeholder="Napiši sporočilo..." required></textarea>
             <button type="submit">Pošlji</button>
         </form>
     </div>
 
-    <script>
-        const form = document.getElementById('messageForm');
-        const textarea = document.getElementById('messageText');
-        const messagesDiv = document.getElementById('messages');
+<script>
+const apiKey = "6MUnabIswTdYCrQEbOJXHnJ8yu0NeA5K";
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();  
+const gifSearchInput = document.getElementById('gifSearchInput');
+const gifSearchBtn = document.getElementById('gifSearchBtn');
+const gifResults = document.getElementById('gifResults');
+const messageText = document.getElementById('messageText');
 
-            const text = textarea.value;
+gifSearchBtn.addEventListener('click', () => {
+    const query = gifSearchInput.value.trim();
+    if (!query) return alert('Vpiši ključno besedo za GIF.');
 
-            if (text.trim() === "") return;
-
-            fetch("{{ url_for('chat', username=selected_user) }}", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Requested-With": "XMLHttpRequest"  
-                },
-                body: JSON.stringify({ message_text: text })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const msg = document.createElement("div");
-                    msg.className = "message sent";
-                    msg.textContent = text;
-                    messagesDiv.appendChild(msg);
-                    textarea.value = "";
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                }
+    fetch(`https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${encodeURIComponent(query)}&limit=10&rating=g`)
+        .then(response => response.json())
+        .then(data => {
+            gifResults.innerHTML = '';
+            if (data.data.length === 0) {
+                gifResults.innerHTML = '<p>Ni rezultatov.</p>';
+                return;
+            }
+            data.data.forEach(gif => {
+                const img = document.createElement('img');
+                img.src = gif.images.fixed_height_small.url;
+                img.alt = gif.title;
+                img.title = "Klikni za pošiljanje tega GIF-a";
+                img.addEventListener('click', () => sendGif(gif.images.original.url));
+                gifResults.appendChild(img);
             });
+        })
+        .catch(err => {
+            console.error('Napaka pri iskanju GIF-ov:', err);
+            alert('Napaka pri iskanju GIF-ov.');
         });
-    </script>
+});
+
+function sendGif(gifUrl){
+    messageText.value = gifUrl;
+    fetch(window.location.pathname, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ message_text: gifUrl })
+    }).then(response => {
+        if(response.redirected){
+            window.location.href = response.url;
+        }
+    }).catch(err => {
+        console.error('Napaka pri pošiljanju GIF-a:', err);
+        alert('Napaka pri pošiljanju GIF-a.');
+    });
+}
+</script>
 </body>
 </html>

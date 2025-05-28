@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, ses
 from tinydb import TinyDB, Query
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+import requests
 import os
 from datetime import datetime
 
@@ -22,6 +23,26 @@ def allowed_file(filename):
 @app.route('/')
 def home():
     return render_template('index.html')
+
+GIPHY_API_KEY = "6MUnabIswTdYCrQEbOJXHnJ8yu0NeA5K"
+
+@app.route('/search_gifs')
+def search_gifs():
+    query = request.args.get('q', '')
+    if not query:
+        return jsonify({'data': []})
+
+    url = f'https://api.giphy.com/v1/gifs/search'
+    params = {
+        'api_key': GIPHY_API_KEY,
+        'q': query,
+        'limit': 10,
+        'rating': 'g'
+    }
+    response = requests.get(url, params=params)
+    data = response.json()
+    gifs = [{'id': gif['id'], 'url': gif['images']['downsized_medium']['url']} for gif in data.get('data', [])]
+    return jsonify({'data': gifs})
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -167,15 +188,17 @@ def chat(username):
 
     current_user = session['user_id']
     User = Query()
-    selected_user = users_table.search(User.username == username)
-    if not selected_user:
+
+    selected_user_obj = users_table.search(User.username == username)
+    if not selected_user_obj:
         flash('Uporabnik ne obstaja.', 'danger')
         return redirect(url_for('messages'))
-    selected_user = selected_user[0]
+    selected_user = username
 
-    sent_to = set([msg['to_user'] for msg in messages_table.search(User.from_user == current_user)])
-    received_from = set([msg['from_user'] for msg in messages_table.search(User.to_user == current_user)])
+    sent_to = set(msg['to_user'] for msg in messages_table.search(User.from_user == current_user))
+    received_from = set(msg['from_user'] for msg in messages_table.search(User.to_user == current_user))
     chat_users = list(sent_to.union(received_from))
+
     chats = []
     for u in chat_users:
         user = users_table.search(User.username == u)
@@ -205,9 +228,10 @@ def chat(username):
         ((User.from_user == current_user) & (User.to_user == username)) |
         ((User.from_user == username) & (User.to_user == current_user))
     )
-    messages = sorted(messages, key=lambda m: m.get('timestamp', ''))
+    messages_dicts = [dict(m) for m in messages]
+    messages_sorted = sorted(messages_dicts, key=lambda m: m.get('timestamp', ''))
 
-    return render_template('chat.html', chats=chats, selected_user=username, messages=messages, current_user=current_user)
+    return render_template('chat.html', chats=chats, selected_user=selected_user, messages=messages_sorted, current_user=current_user)
 
 @app.route('/logout')
 def logout():
