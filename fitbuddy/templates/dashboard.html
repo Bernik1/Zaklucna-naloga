@@ -177,11 +177,12 @@
 </head>
 <body>
     <div class="sidebar">
-        {% if current_user.profile_pic %}
-            <img src="{{ current_user.profile_pic }}" alt="Tvoja slika" class="profile-pic">
+        {% if profile.picture %}
+            <img src="{{ url_for('static', filename='uploads/' ~ profile.picture) }}" alt="Tvoja slika" class="profile-pic">
         {% else %}
             <img src="{{ url_for('static', filename='images/default.png') }}" alt="Privzeta slika" class="profile-pic">
         {% endif %}
+
 
         <h2>Fitt Buddy</h2>
         <nav>
@@ -209,11 +210,12 @@
         <div class="user-card" id="user-card">
             <a href="{{ url_for('chat', username=user.username) }}" class="message-button">Sporočilo</a>
 
-            {% if user_logged_in.profile_pic %}
-                <img src="{{ user_logged_in.profile_pic }}" alt="Tvoja slika" class="profile-pic">
+            {% if user.picture %}
+                <img src="{{ url_for('static', filename='uploads/image.jpg') }}" alt="Profilna slika" class="profile-pic">
             {% else %}
-                <img src="{{ url_for('static', filename='images/default.png') }}" alt="Privzeta slika" class="profile-pic">
-            {% endif %}
+                <img src="{{ url_for('static', filename='uploads/default.jpg') }}" alt="Privzeta slika" class="profile-pic">
+                {% endif %}
+
 
 
             <h2>{{ user.username }}</h2>
