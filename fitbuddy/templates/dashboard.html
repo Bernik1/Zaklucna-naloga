@@ -115,11 +115,11 @@
             color: #666;
             padding: 40px;
         }
-    </style>
+    </style> 
 </head>
 <body>
     <div class="sidebar">
-        <h2>Moj App</h2>
+        <h2>Fitt Buddy</h2>
         <nav>
             <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Chat</a>
             <a href="{{ url_for('messages') }}" class="{% if request.endpoint == 'messages' %}active{% endif %}">Sporočila</a>

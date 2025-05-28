@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, request, session
+from flask import Flask, render_template, redirect, url_for, flash, request, session, jsonify
 from tinydb import TinyDB, Query
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -75,7 +75,6 @@ def settings():
         age = request.form['age']
         goal = request.form['goal']
         bio = request.form['bio']
-
         update_data = {'age': age, 'goal': goal, 'bio': bio}
 
         if 'profile_picture' in request.files:
@@ -118,27 +117,19 @@ def dashboard():
         session['swiped_users'] = []
 
     swiped = session['swiped_users']
-
-    # uporabniki, ki še niso swipani
     remaining_users = [u for u in all_users if u['username'] not in swiped]
 
     if request.method == 'POST':
         swipe = request.form.get('swipe')
         user_to_swipe = request.form.get('user_to_swipe')
         if swipe and user_to_swipe:
-            # Lahko tukaj shraniš, če želiš, kakšen swipe je bil (like/dislike)
             session['swiped_users'].append(user_to_swipe)
             session.modified = True
             flash(f'Odločitev: {swipe} za uporabnika {user_to_swipe}', 'info')
-
-        # Osveži seznam
         remaining_users = [u for u in all_users if u['username'] not in session['swiped_users']]
 
-    # vzamemo prvega, če je še kdo
     next_user = remaining_users[0] if remaining_users else None
-
     return render_template('dashboard.html', profile=profile, user=next_user)
-
 
 @app.route('/profile')
 def profile():
@@ -157,8 +148,6 @@ def messages():
 
     current_user = session['user_id']
     User = Query()
-
-    # Najdi vse uporabnike, s katerimi imaš pogovor (poslano ali prejeto)
     sent_to = set([msg['to_user'] for msg in messages_table.search(User.from_user == current_user)])
     received_from = set([msg['from_user'] for msg in messages_table.search(User.to_user == current_user)])
     chat_users = list(sent_to.union(received_from))
@@ -171,7 +160,6 @@ def messages():
 
     return render_template('messages.html', chats=chats, selected_user=None)
 
-
 @app.route('/chat/<username>', methods=['GET', 'POST'])
 def chat(username):
     if 'user_id' not in session:
@@ -179,15 +167,12 @@ def chat(username):
 
     current_user = session['user_id']
     User = Query()
-
-    # Preveri, ali izbrani uporabnik obstaja
     selected_user = users_table.search(User.username == username)
     if not selected_user:
         flash('Uporabnik ne obstaja.', 'danger')
         return redirect(url_for('messages'))
     selected_user = selected_user[0]
 
-    # Poišči vse uporabnike za levi meni
     sent_to = set([msg['to_user'] for msg in messages_table.search(User.from_user == current_user)])
     received_from = set([msg['from_user'] for msg in messages_table.search(User.to_user == current_user)])
     chat_users = list(sent_to.union(received_from))
@@ -198,7 +183,12 @@ def chat(username):
             chats.append(user[0])
 
     if request.method == 'POST':
-        text = request.form.get('message_text')
+        if request.is_json:
+            data = request.get_json()
+            text = data.get('message_text', '').strip()
+        else:
+            text = request.form.get('message_text', '').strip()
+
         if text:
             messages_table.insert({
                 'from_user': current_user,
@@ -206,19 +196,18 @@ def chat(username):
                 'text': text,
                 'timestamp': datetime.utcnow().isoformat()
             })
-            return redirect(url_for('chat', username=username))
 
-    # Pridobi sporočila med uporabnikoma
+        if request.is_json:
+            return jsonify({'success': True})
+        return redirect(url_for('chat', username=username))
+
     messages = messages_table.search(
-        ( (User.from_user == current_user) & (User.to_user == username) ) |
-        ( (User.from_user == username) & (User.to_user == current_user) )
+        ((User.from_user == current_user) & (User.to_user == username)) |
+        ((User.from_user == username) & (User.to_user == current_user))
     )
-
-    # Razvrsti sporočila po času (če imaš timestamp)
     messages = sorted(messages, key=lambda m: m.get('timestamp', ''))
 
     return render_template('chat.html', chats=chats, selected_user=username, messages=messages, current_user=current_user)
-
 
 @app.route('/logout')
 def logout():

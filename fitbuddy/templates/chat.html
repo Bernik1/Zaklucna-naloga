@@ -108,24 +108,25 @@
     </style>
 </head>
 <body>
+     </style>
+</head>
+<body>
     <div class="sidebar">
         <h2>Sporočila</h2>
         <ul class="chat-list">
             {% for chat in chats %}
             <li>
-                <a href="{{ url_for('chat', username=chat.username) }}" class="{% if selected_user == chat.username %}active{% endif %}">
-                    {{ chat.username }}
-                </a>
+                <a href="{{ url_for('chat', username=chat.username) }}" class="{% if selected_user == chat.username %}active{% endif %}">{{ chat.username }}</a>
             </li>
             {% endfor %}
         </ul>
     </div>
-    <div class="main-container">
-        <!-- Gumb za nazaj na swipe -->
-        <a href="{{ url_for('dashboard') }}" class="back-btn">← Nazaj na Swipe</a>
 
+    <div class="main-container">
+        <a href="{{ url_for('dashboard') }}" style="margin-bottom: 20px; display:inline-block; background:#4267B2; color:white; padding:10px 15px; border-radius:6px; text-decoration:none;">← Nazaj na Swipe</a>
         <h3>Pogovor s {{ selected_user }}</h3>
-        <div class="messages">
+
+        <div id="messages" class="messages">
             {% if messages %}
                 {% for msg in messages %}
                     <div class="message {% if msg.from_user == current_user %}sent{% else %}received{% endif %}">
@@ -136,10 +137,45 @@
                 <p>Ni sporočil.</p>
             {% endif %}
         </div>
-        <form method="POST">
-            <textarea name="message_text" placeholder="Napiši sporočilo..." required></textarea>
+
+        <form id="messageForm">
+            <textarea id="messageText" name="message_text" placeholder="Napiši sporočilo..." required></textarea>
             <button type="submit">Pošlji</button>
         </form>
     </div>
+
+    <script>
+        const form = document.getElementById('messageForm');
+        const textarea = document.getElementById('messageText');
+        const messagesDiv = document.getElementById('messages');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();  
+
+            const text = textarea.value;
+
+            if (text.trim() === "") return;
+
+            fetch("{{ url_for('chat', username=selected_user) }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"  
+                },
+                body: JSON.stringify({ message_text: text })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const msg = document.createElement("div");
+                    msg.className = "message sent";
+                    msg.textContent = text;
+                    messagesDiv.appendChild(msg);
+                    textarea.value = "";
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
